@@ -27,7 +27,7 @@ presence.on('UpdateData', async () => {
   ])
   const presenceData: PresenceData = {
     type: ActivityType.Watching,
-    largeImageKey: 'https://i.imgur.com/AkxzWld.jpeg',
+    largeImageKey: 'https://i.imgur.com/eNdtcpQ.jpeg',
     startTimestamp: browsingTimestamp,
   }
 
