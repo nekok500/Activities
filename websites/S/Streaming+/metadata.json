@@ -20,7 +20,6 @@
     "live",
     "video"
   ],
-  "iframe": true,
   "settings": [
     {
       "id": "privacy",
