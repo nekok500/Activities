@@ -3,24 +3,24 @@ import { ActivityType, Assets, getTimestampsFromMedia } from 'premid'
 const presence = new Presence({
   clientId: '1359510663159877642',
 })
-const getStrings = presence.getStrings({
-  playing: 'general.playing',
-  paused: 'general.paused',
-  watchingLive: 'general.watchingLive',
-  waitingLive: 'general.waitingLive',
-  waitingLiveThe: 'general.waitingLiveThe',
-  waitingVid: 'general.waitingVid',
-  waitingVidThe: 'general.waitingVidThe',
-  buttonWatchStream: 'general.buttonWatchStream',
-  buttonViewPage: 'general.buttonViewPage',
-  viewAPage: 'general.viewAPage',
-})
 const browsingTimestamp = Math.floor(Date.now() / 1000)
 
 let data: Metadata | undefined
 
 presence.on('UpdateData', async () => {
-  const strings = await getStrings
+  const strings = await presence.getStrings({
+    playing: 'general.playing',
+    paused: 'general.paused',
+    watchingLive: 'general.watchingLive',
+    waitingLive: 'general.waitingLive',
+    waitingLiveThe: 'general.waitingLiveThe',
+    waitingVid: 'general.waitingVid',
+    waitingVidThe: 'general.waitingVidThe',
+    buttonWatchStream: 'general.buttonWatchStream',
+    buttonViewPage: 'general.buttonViewPage',
+    viewAPage: 'general.viewAPage',
+  })
+
   const [privacy, buttons] = await Promise.all([
     presence.getSetting<boolean>('privacy'),
     presence.getSetting<boolean>('buttons'),
@@ -70,7 +70,7 @@ presence.on('UpdateData', async () => {
       if (buttons) {
         presenceData.buttons = [{
           label: strings.buttonWatchStream,
-          url: location.href.split('?')[0] || location.href,
+          url: document.location.href.split('?')[0] || document.location.href,
         }, {
           label: strings.buttonViewPage,
           url: data.buy_ticket_url,
@@ -92,7 +92,6 @@ presence.on('UpdateData', async () => {
 interface Metadata {
   app_name: string // streaming title
   buy_ticket_url: string
-  // archive_mode: 'ON' | string
   delivery_status: 'PREPARING' | 'STARTED' | 'WAIT_CONFIRM_ARCHIVED' | 'CONFIRMED_ARCHIVE' | string
 
   thumbnail?: string
