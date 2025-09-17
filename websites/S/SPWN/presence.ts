@@ -9,7 +9,6 @@ enum ActivityAssets { // Other default assets can be found at index.d.ts
   Logo = 'https://i.imgur.com/LvbXO0a.png',
 }
 
-
 presence.on('UpdateData', async () => {
   const strings = await presence.getStrings({
     playing: 'general.playing',
