@@ -31,21 +31,21 @@ presence.on('UpdateData', async () => {
   }
   const { pathname } = document.location
 
-  if (pathname.startsWith("/_")) {
+  if (pathname.startsWith('/_')) {
     // internal site (e.g. firebase auth)
     presence.clearActivity()
     return
   }
 
-  const video = document.querySelector<HTMLVideoElement>("video")
+  const video = document.querySelector<HTMLVideoElement>('video')
 
-  const eventId = /\/events\/([^\/]+)/.exec(document.location.pathname)?.[1]
+  const eventId = /\/events\/([^/]+)/.exec(document.location.pathname)?.[1]
   if (eventId) {
     if (pathname.endsWith('/streaming')) {
       presenceData.details = strings.watchingLive
 
-      if (!privacy) {
-        const title = document.querySelector<HTMLParagraphElement>(`#Streaming > div:nth-of-type(3) > p`)?.textContent!
+      if (privacy === false) {
+        const title = document.querySelector<HTMLParagraphElement>(`#Streaming > div:nth-of-type(3) > p`)?.textContent
         if (title) {
           presenceData.state = title
           presenceData.largeImageText = title
@@ -56,9 +56,10 @@ presence.on('UpdateData', async () => {
           presenceData.largeImageKey = poster
         }
       }
-    } else {
-      if (!privacy) {
-        const title = document.querySelector<HTMLHeadingElement>(`h2`)?.textContent!
+    }
+    else {
+      if (privacy === false) {
+        const title = document.querySelector<HTMLHeadingElement>(`h2`)?.textContent
         if (title) {
           presenceData.state = title
           presenceData.largeImageText = title
@@ -72,12 +73,13 @@ presence.on('UpdateData', async () => {
 
       if (pathname.endsWith('/ticket')) {
         presenceData.details = 'Buying ticket'
-      } else {
+      }
+      else {
         presenceData.details = strings.viewAPage
       }
     }
 
-    if (!privacy && buttons) {
+    if (privacy === false && buttons) {
       presenceData.buttons = [
         {
           label: strings.buttonViewPage,
@@ -85,14 +87,15 @@ presence.on('UpdateData', async () => {
         },
       ]
     }
-  } else if (pathname.startsWith("/account/ticket")) {
-    // "/account/ticket/vod" is vod tickets page, not a ticket page
-    const eventId = /\/account\/ticket\/(?!vod)([^\/]+)/.exec(document.location.pathname)?.[1]
+  }
+  else if (pathname.startsWith('/account/ticket')) {
+    // '/account/ticket/vod' is vod tickets page, not a ticket page
+    const eventId = /\/account\/ticket\/(?!vod)([^/]+)/.exec(document.location.pathname)?.[1]
     if (eventId) {
       presenceData.details = 'Checking my ticket'
 
-      if (!privacy) {
-        const title = document.querySelector<HTMLParagraphElement>(`.title`)?.textContent!
+      if (privacy === false) {
+        const title = document.querySelector<HTMLParagraphElement>(`.title`)?.textContent
         if (title) {
           presenceData.state = title
           presenceData.largeImageText = title
@@ -103,10 +106,12 @@ presence.on('UpdateData', async () => {
           presenceData.largeImageKey = coverArt
         }
       }
-    } else {
+    }
+    else {
       presenceData.details = 'Checking my tickets'
     }
-  } else {
+  }
+  else {
     switch (pathname) {
       case '/':
         presenceData.details = 'Browsing home page'
@@ -115,7 +120,7 @@ presence.on('UpdateData', async () => {
         presenceData.details = 'Buying ticket'
         break
       default:
-        presenceData.details = `Browsing ${pathname.split("/")[1]?.replace('-', ' ')} page`
+        presenceData.details = `Browsing ${pathname.split('/')[1]?.replace('-', ' ')} page`
         break
     }
   }
@@ -126,7 +131,7 @@ presence.on('UpdateData', async () => {
       ? strings.paused
       : strings.playing
 
-    if (video?.paused === false && !privacy) {
+    if (video?.paused === false && privacy === false) {
       [presenceData.startTimestamp, presenceData.endTimestamp] = getTimestampsFromMedia(video)
     }
   }
