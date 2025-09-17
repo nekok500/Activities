@@ -51,7 +51,7 @@ presence.on('UpdateData', async () => {
           presenceData.largeImageText = title
         }
 
-        const poster = extractPoster()
+        const poster = getPoster()
         if (poster) {
           presenceData.largeImageKey = poster
         }
@@ -143,6 +143,6 @@ function getCoverArt(): string | undefined {
   return Array.from(document.querySelectorAll<HTMLImageElement>(`img`)).find(img => img.src.startsWith('https://public-web.spwn.jp/events/'))?.src
 }
 
-function extractPoster(): string | undefined {
+function getPoster(): string | undefined {
   return Array.from(document.querySelectorAll<HTMLVideoElement>(`video`)).find(video => video.poster.startsWith('https://public-web.spwn.jp/events/'))?.poster
 }
