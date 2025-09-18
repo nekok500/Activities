@@ -45,7 +45,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = strings.watchingLive
 
       if (privacy === false) {
-        const title = document.querySelector<HTMLParagraphElement>(`#Streaming > div:nth-of-type(3) > p`)?.textContent
+        const title = document.querySelector<HTMLParagraphElement>('#Streaming > div:nth-of-type(3) > p')?.textContent
         if (title) {
           presenceData.state = title
           presenceData.largeImageText = title
@@ -59,7 +59,7 @@ presence.on('UpdateData', async () => {
     }
     else {
       if (privacy === false) {
-        const title = document.querySelector<HTMLHeadingElement>(`h2`)?.textContent
+        const title = document.querySelector<HTMLHeadingElement>('h2')?.textContent
         if (title) {
           presenceData.state = title
           presenceData.largeImageText = title
@@ -95,7 +95,7 @@ presence.on('UpdateData', async () => {
       presenceData.details = 'Checking my ticket'
 
       if (privacy === false) {
-        const title = document.querySelector<HTMLParagraphElement>(`.title`)?.textContent
+        const title = document.querySelector<HTMLParagraphElement>('.title')?.textContent
         if (title) {
           presenceData.state = title
           presenceData.largeImageText = title
@@ -140,9 +140,9 @@ presence.on('UpdateData', async () => {
 })
 
 function getCoverArt(): string | undefined {
-  return Array.from(document.querySelectorAll<HTMLImageElement>(`img`)).find(img => img.src.startsWith('https://public-web.spwn.jp/events/'))?.src
+  return Array.from(document.querySelectorAll<HTMLImageElement>('img')).find(img => img.src.startsWith('https://public-web.spwn.jp/events/'))?.src
 }
 
 function getPoster(): string | undefined {
-  return Array.from(document.querySelectorAll<HTMLVideoElement>(`video`)).find(video => video.poster.startsWith('https://public-web.spwn.jp/events/'))?.poster
+  return Array.from(document.querySelectorAll<HTMLVideoElement>('video')).find(video => video.poster.startsWith('https://public-web.spwn.jp/events/'))?.poster
 }
